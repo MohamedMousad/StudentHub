@@ -51,26 +51,15 @@
                             <% if (profile.skills && profile.skills.length> 0) { %>
                                 <section class="profile-section">
                                     <h2>Skills</h2>
-                                    <div class="skills-list">
+                                    <div class="interests-list">
                                         <% profile.skills.forEach(skill=> { %>
-                                            <div class="skill-item">
-                                                <div class="skill-header">
-                                                    <span>
-                                                        <%= skill.name %>
-                                                    </span>
-                                                    <span>
-                                                        <%= skill.level %>%
-                                                    </span>
-                                                </div>
-                                                <div class="skill-bar">
-                                                    <div class="skill-progress"></div>
-                                                </div>
-                                            </div>
+                                            <span class="interest-tag">
+                                                <%= skill.name %>
+                                            </span>
                                             <% }) %>
                                     </div>
                                 </section>
                                 <% } %>
-
                                     <% if (profile.projects && profile.projects.length> 0) { %>
                                         <section class="profile-section">
                                             <h2>Projects</h2>

@@ -109,7 +109,7 @@ const AddBannedWords = async (req, res) => {
         req.session.success_msg = 'Banned word added successfully';
         res.redirect('/admin/banned-words');
     } catch (error) {
-        if (error.code === 11000) {
+        if (error.code === 11000) {  // duplicated
             req.session.error_msg = 'Word already exists in banned list';
         } else {
             req.session.error_msg = 'Failed to add banned word';

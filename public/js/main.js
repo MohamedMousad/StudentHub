@@ -57,6 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (skillBars.length > 0) {
     const animateSkills = () => {
       skillBars.forEach(bar => {
+        
         const width = bar.style.width;
         bar.style.width = '0';
         setTimeout(() => {

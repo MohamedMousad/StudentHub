@@ -25,7 +25,7 @@ exports.checkBannedWords = async (text) => {
   };
 };
 
-
+// increase flagged attempts
 const incAttempts = async (req) => {
   if (req.session.user) {
     await User.findByIdAndUpdate(req.session.user._id, {
@@ -46,14 +46,14 @@ exports.validateProfileContent = async (req, res, next) => {
       // Log flagged attempt
       await incAttempts(req)
       req.session.error_msg = `Bio Content contains inappropriate words: ${BioCheck.words.join(', ')}`;
-      return res.redirect('back');
+      return res.redirect('/profile/edit');
     }
 
     if (!interestsCheck.clean) {
       // Log flagged attempt
       await incAttempts(req)
       req.session.error_msg = `interests Content contains inappropriate words: ${interestsCheck.words.join(', ')}`;
-      return res.redirect('back');
+      return res.redirect('/profile/edit');
     }
 
     next();
@@ -62,3 +62,55 @@ exports.validateProfileContent = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.validateSkill = async (req, res, next) => {
+  try {
+    const { name } = req.body
+    const check = await exports.checkBannedWords(name)
+    if (!check.clean) {
+      await incAttempts(req)
+      req.session.error_msg = `Skills Content contains inappropriate words: ${name}`;
+      return res.redirect('/profile/edit');
+    }
+    next()
+  }
+  catch (err) {
+    console.error('Content moderation error:', error);
+    next(error);
+  }
+}
+
+exports.validateProject = async (req, res, next) => {
+  try {
+    const { name, description, githubLink, liveLink } = req.body
+    const nameCheck = await exports.checkBannedWords(name)
+    const descriptionCheck = await exports.checkBannedWords(description)
+    const githubLinkCheck = await exports.checkBannedWords(githubLink)
+    const liveLinkCheck = await exports.checkBannedWords(liveLink)
+    if (!nameCheck.clean) {
+      await incAttempts(req)
+      req.session.error_msg = `Project name contains inappropriate words: ${name}`;
+      return res.redirect('/profile/edit');
+    }
+    if (!descriptionCheck.clean) {
+      await incAttempts(req)
+      req.session.error_msg = `Project description contains inappropriate words: ${name}`;
+      return res.redirect('/profile/edit');
+    }
+    if (!githubLinkCheck.clean) {
+      await incAttempts(req)
+      req.session.error_msg = `Github Link contains inappropriate words: ${name}`;
+      return res.redirect('/profile/edit');
+    }
+    if (!liveLinkCheck.clean) {
+      await incAttempts(req)
+      req.session.error_msg = `Live Link contains inappropriate words: ${name}`;
+      return res.redirect('/profile/edit');
+    }
+    next()
+  }
+  catch (err) {
+    console.error('Content moderation error:', error);
+    next(error);
+  }
+}

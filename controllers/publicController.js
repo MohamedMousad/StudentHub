@@ -34,7 +34,7 @@ const directory = async (req, res) => {
         };
 
         // Apply visibility filter
-        if (!req.session.user) {
+        if (!req.session.user) {  // Guest 
             query.visibility = 'public';
         } else if (req.session.user.role !== 'admin') {
             query.visibility = { $in: ['public', 'university'] };

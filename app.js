@@ -23,7 +23,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  store: MongoStore.create({
+  store: MongoStore.create({   // session in mongo instead of memory
     mongoUrl: process.env.MONGODB_URI || 'mongodb://localhost:27017/student_hub'
   }),
   cookie: {

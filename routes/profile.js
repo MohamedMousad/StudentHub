@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { Profileupload } = require('../config/multer')
 const { isAuthenticated, isApproved } = require('../middleware/auth');
-const { validateProfileContent } = require('../middleware/contentModeration');
+const { validateProfileContent , validateSkill , validateProject } = require('../middleware/contentModeration');
 const profileController = require('../controllers/profileController')
 
 // GET My Profile
@@ -21,10 +21,10 @@ router.post('/edit',
 );
 
 // POST Add Skill
-router.post('/skill/add', isAuthenticated, isApproved, profileController.AddSkill);
+router.post('/skill/add', isAuthenticated, isApproved, validateSkill ,profileController.AddSkill);
 
 // POST Add Project
-router.post('/project/add', isAuthenticated, isApproved, validateProfileContent, profileController.AddProject);
+router.post('/project/add', isAuthenticated, isApproved, validateProject, profileController.AddProject);
 
 // GET View Profile by username
 router.get('/:userName', profileController.ProfileByUsername);
