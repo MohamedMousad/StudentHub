@@ -1,6 +1,8 @@
 const User = require('../models/User');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
+const fs = require('fs');
+const path = require('path');
 
 
 const GetSignUp = (req, res) => {
@@ -40,6 +42,22 @@ const SignUp = async (req, res) => {
             });
         }
 
+        // Generate filename
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        const filename = `student-id-${uniqueSuffix}${path.extname(req.file.originalname)}`;
+
+        // Save file manually
+        const uploadPath = path.join(
+            __dirname,
+            '..',
+            'public',
+            'uploads',
+            'documents',
+            filename
+        );
+
+        fs.writeFileSync(uploadPath, req.file.buffer);
+
         // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -50,7 +68,7 @@ const SignUp = async (req, res) => {
             username,
             password: hashedPassword,
             studentId,
-            studentIdDocument: '/uploads/documents/' + req.file.filename,
+            studentIdDocument: '/uploads/documents/' + filename,
             status: 'pending'
         });
 

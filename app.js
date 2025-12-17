@@ -39,7 +39,7 @@ app.use((req, res, next) => {
   delete req.session.success_msg;
   delete req.session.error_msg;
   next();
-});
+}); 
 
 // View Engine
 app.set('view engine', 'ejs');
