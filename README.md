@@ -49,8 +49,8 @@ Student Hub is a Node.js/Express web application that provides a simple student 
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/MohamedKhaled217/Student_Hub.git
-   cd Student_Hub
+   git clone https://github.com/MohamedKhaled217/StudentHub.git
+   cd StudentHub
    ```
 
 2. **Install dependencies**
@@ -70,7 +70,7 @@ Student Hub is a Node.js/Express web application that provides a simple student 
    Add at least:
 
    ```env
-   MONGODB_URI=mongodb://localhost:27017/student_hub
+   MONGODB_URI=mongodb://localhost:27017/studenthub
    SESSION_SECRET=your-strong-secret
    PORT=3000
    ```
